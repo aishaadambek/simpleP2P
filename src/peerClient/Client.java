@@ -2,7 +2,6 @@ package peerClient;
 
 import java.io.*;
 import java.net.*;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.awt.event.*;
@@ -246,21 +245,15 @@ public class Client extends JFrame implements ActionListener {
 
     	// Now run each peer also as a server that can accept invitations
         // and share its files
-        new Thread(){
-            public void run(){
-                try {
-                    peer.server();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                peer.server();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }.start();
+        }).start();
 
-        new Thread(){
-            public void run(){
-                peer.income();
-            }
-        }.start();
+        new Thread(() -> peer.income()).start();
 
     }
 

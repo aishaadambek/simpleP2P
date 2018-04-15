@@ -214,8 +214,6 @@ public class Peer {
         FTSocket = new Socket(FTAddress, FTPort);
         PrintWriter FTOut = new PrintWriter(FTSocket.getOutputStream(), true);
 
-        //TODO: REMOVE THIS LINE
-        System.out.println("Client is leaving and = " + address + ", " + port + ".");
         FTOut.println("BYE"); FTOut.flush();
         FTOut.println(address + ", " + port);
     }

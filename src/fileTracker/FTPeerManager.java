@@ -137,18 +137,18 @@ public class FTPeerManager extends Thread {
                         out.flush();
                     }
                 } else if (line.startsWith("SCORE")) {
+                    System.out.println("Received: " + line);
                     StringTokenizer st = new StringTokenizer(line, ":");
                     String x = st.nextToken();
                     String y = st.nextToken();
                     int score = Integer.parseInt(y.substring(1));
 
                     FileTracker.changeScore(x.substring(9, x.length() - 1), score);
+                    System.out.println("FTPM SCORE, name = " +  x.substring(9, x.length() - 1) + ", score = " + score);
 
                 } else if (line.equals("BYE")) {
                     String peer = in.readLine();
-                    System.out.println("Peer leaving = " + peer);
                     FileTracker.peerLeave(peer);
-                    FileTracker.printAll();
                 }
 
             } catch (IOException ioe) {

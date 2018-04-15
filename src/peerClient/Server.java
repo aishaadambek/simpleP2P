@@ -2,7 +2,6 @@ package peerClient;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 import java.util.Random;

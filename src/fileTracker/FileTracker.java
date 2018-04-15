@@ -2,7 +2,6 @@ package fileTracker;
 import pool.PeerPool;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -100,6 +99,7 @@ public class FileTracker {
 	}
 
 	public static void changeScore(String peer, int score) {
+        System.out.println("FTPM SCORE, name = " +  peer + ", score = " + score);
         Integer[] requests = peersRequests.get(peer);
         if(requests == null) {
             requests = new Integer[2];
@@ -116,8 +116,8 @@ public class FileTracker {
             if(score == 1) requests[1]++;
             peersRequests.put(peer, requests);
         }
-        double x = ((double) requests[1])/requests[0];
-        int new_score = (int) x * 100;
+        int new_score = (100 * requests[1])/requests[0];
+        System.out.println("FTPM SCORE, name = " +  peer + ", score = " + new_score);
         peers.put(peer, new_score);
     }
 
@@ -144,21 +144,15 @@ public class FileTracker {
         System.out.println("Waiting for peers to join at the port number = 4000"
                 + " and IP Address = 127.0.0.1");
 
-        new Thread() {
-            public void run() {
-                try {
-                    server();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                server();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }.start();
+        }).start();
 
-        new Thread() {
-            public void run() {
-                income();
-            }
-        }.start();
+        new Thread(() -> income()).start();
 
     }
 
@@ -168,8 +162,8 @@ public class FileTracker {
 	}
 
 	public static int getPeerScore(String peer){
-	    int score = peers.get(peer);
-        return score;
+	    System.out.println("FTPM SCORE, name = " +  peer + ", score = " + peers.get(peer));
+        return peers.get(peer);
     }
 
     public static void printAll() {
